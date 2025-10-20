@@ -1,0 +1,30 @@
+server:
+  # Port sur lequel la gateway écoutera. C'est le port que votre frontend appellera.
+  port: 8080
+
+spring:
+  application:
+    # Nom de l'application, il apparaîtra dans Eureka.
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          # Permet à la gateway de créer des routes automatiquement à partir d'Eureka.
+          enabled: true
+          # Met les noms des services en minuscules.
+          lower-case-service-id: true
+
+# Configuration du client Eureka pour trouver les autres services.
+eureka:
+  client:
+    service-url:
+      # L'URL de votre serveur Eureka. À adapter si besoin.
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+# Active les logs de la gateway pour le débogage.
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
