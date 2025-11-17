@@ -1,6 +1,7 @@
 server:
-  # Port sur lequel la gateway écoutera. C'est le port que votre frontend appellera.
-  port: 8081
+  # Port sur lequel la gateway écoutera. 
+  # Mis à 8080 pour correspondre à votre config front et docker-compose.
+  port: 8080
 
 spring:
   application:
@@ -14,13 +15,26 @@ spring:
           enabled: true
           # Met les noms des services en minuscules.
           lower-case-service-id: true
+  
+  # =============================================
+  # == CONFIGURATION DE SÉCURITÉ À AJOUTER ==
+  # =============================================
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # C'est l'URL de votre realm Keycloak.
+          # 'keycloak' est le nom du service dans votre réseau Docker.
+          # 'eventy-realm' est le nom de votre realm.
+          issuer-uri: http://keycloak:8090/realms/eventy-realm
 
 # Configuration du client Eureka pour trouver les autres services.
 eureka:
   client:
     service-url:
-      # L'URL de votre serveur Eureka. À adapter si besoin.
-      defaultZone: http://localhost:8761/eureka/
+      # L'URL de votre serveur Eureka. 
+      # Remplacé 'localhost' par 'eureka' pour être compatible Docker.
+      defaultZone: http://eureka:8761/eureka/
   instance:
     prefer-ip-address: true
 
@@ -28,3 +42,4 @@ eureka:
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
+    org.springframework.security: DEBUG # Ajouté pour débugger la sécurité
