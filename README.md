@@ -65,7 +65,7 @@ eureka:
 @EnableDiscoveryClient
 public class UserServiceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(UserServiceApplication.class, args);
+        SpringApplication.run(UserServiceApplication.class, args); 
     }
 }
 Une fois ces trois étapes complétées, votre microservice s'enregistrera automatiquement auprès d'Eureka au démarrage, et la gateway sera capable de lui transférer les requêtes.
