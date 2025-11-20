@@ -68,7 +68,7 @@ public class UserServiceApplication {
         SpringApplication.run(UserServiceApplication.class, args); 
     }
 }
-Une fois ces trois étapes complétées, votre microservice s'enregistrera automatiquement auprès d'Eureka au démarrage, et la gateway sera capable de lui transférer les requêtes.
+Une fois ces trois étapes complétées, votre microservice s'enregistrera automatiquement auprès d'Eureka au démarrage, et la gateway sera capable de lui transférer les requêtes. +TEST
 
 
 
