@@ -21,35 +21,35 @@ public class GatewayConfig {
                 // --- Route pour le service Utilisateurs ---
                 .route("user-service-route", r -> r
                         .path("/api/users/**") // Si une requête arrive sur ce chemin...
-                        .filters(f -> f.stripPrefix(2)) // ... on retire les 2 premiers segments ('/api/users') avant de la transférer...
-                        .uri("lb://user-service") // ... vers le service nommé 'user-service' trouvé via Eureka.
+                        .filters(f -> f.stripPrefix(1)) // ... on retire les 2 premiers segments ('/api/users') avant de la transférer...
+                        .uri("lb://eventy-users-service") // ... vers le service nommé 'user-service' trouvé via Eureka.
                 )
 
                 // --- Route pour le service Événements ---
                 .route("event-service-route", r -> r
                         .path("/api/events/**")
-                        .filters(f -> f.stripPrefix(2))
-                        .uri("lb://event-service")
+                        .filters(f -> f.stripPrefix(1))
+                        .uri("lb://eventy-events-service")
                 )
 
                 // --- Route pour le service Tickets ---
                 .route("ticket-service-route", r -> r
                         .path("/api/tickets/**")
-                        .filters(f -> f.stripPrefix(2))
-                        .uri("lb://ticket-service")
+                        .filters(f -> f.stripPrefix(1))
+                        .uri("lb://tickets-service")
                 )
 
                 // --- Route pour le service Transactions ---
                 .route("transaction-service-route", r -> r
                         .path("/api/transactions/**")
-                        .filters(f -> f.stripPrefix(2))
-                        .uri("lb://transaction-service")
+                        .filters(f -> f.stripPrefix(1))
+                        .uri("lb://transactions-service")
                 )
 
                 // --- Route pour le service Interactions (Messages, Avis, Signalements) ---
                 .route("interaction-service-route", r -> r
                         .path("/api/interactions/**")
-                        .filters(f -> f.stripPrefix(2))
+                        .filters(f -> f.stripPrefix(1))
                         .uri("lb://interaction-service")
                 )
                 .build();
