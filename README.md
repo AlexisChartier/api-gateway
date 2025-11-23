@@ -52,7 +52,7 @@ N'oubliez pas d'inclure la section <dependencyManagement> pour spring-cloud-depe
 
 2. Configurer le application.ymlDans le fichier src/main/resources/application.yml de votre microservice, vous devez définir son nom et l'adresse du serveur Eureka.spring:
   application:
-    # IMPORTANT : C'est ce nom que la gateway utilise pour le routage (ex: "lb://user-service")
+     IMPORTANT : C'est ce nom que la gateway utilise pour le routage (ex: "lb://user-service")
     name: user-service # Remplacez par le nom de votre service
 
 eureka:
@@ -64,12 +64,14 @@ eureka:
     # Préférer l'adresse IP à l'hostname pour l'enregistrement
     prefer-ip-address: true
 3. Activer la découverteAssurez-vous que l'annotation @EnableDiscoveryClient est présente sur votre classe principale d'application Spring Boot.@SpringBootApplication
+
 @EnableDiscoveryClient
 public class UserServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserServiceApplication.class, args); 
     }
 }
+
 Une fois ces trois étapes complétées, votre microservice s'enregistrera automatiquement auprès d'Eureka au démarrage, et la gateway sera capable de lui transférer les requêtes. +TEST
 
 
