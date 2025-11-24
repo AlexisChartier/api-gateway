@@ -52,6 +52,11 @@ public class GatewayConfig {
                         .filters(f -> f.stripPrefix(1))
                         .uri("lb://interaction-service")
                 )
+                .route("event-categories-route", r -> r
+                        .path("/api/event-categories/**")
+                        .filters(f -> f.stripPrefix(1))
+                        .uri("lb://eventy-events-service")
+                )
                 .build();
     }
 }
