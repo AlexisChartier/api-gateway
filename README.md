@@ -19,12 +19,10 @@ Les fonctionnalités clés sont :
 Ce projet repose sur les dépendances Spring Boot suivantes :
 
 spring-cloud-starter-gateway: Le framework principal qui fournit toutes les fonctionnalités de routage, de filtrage et de proxy.
-
 spring-cloud-starter-netflix-eureka-client: Permet à la gateway de s'enregistrer auprès du serveur Eureka et de découvrir d'autres services.
-
 spring-boot-starter-actuator: Expose des endpoints de monitoring (/actuator) pour vérifier l'état de la gateway.
 
-Configuration des Routes
+# Configuration des Routes
 
 Le routage est défini de manière programmatique dans la classe GatewayConfig.java. Chaque route intercepte un modèle de chemin spécifique et le redirige vers un service découvert par Eureka.
 
@@ -36,21 +34,25 @@ Exemple de route pour le user-service :
     .uri("lb://user-service")             // 3. Redirige vers le service 'user-service' via Eureka
 )
 
-
 Le préfixe lb:// indique à Spring Cloud Gateway d'utiliser son mécanisme de répartition de charge (Load Balancing) pour trouver une instance saine du service via Eureka.
 
+## Guide pour les autres Microservices (Intégration avec Eureka)
 
-Guide pour les autres Microservices (Intégration avec Eureka)
-Pour qu'un microservice (par exemple, user-service, ticket-service, etc.) puisse être découvert et utilisé par cette gateway, il DOIT s'enregistrer comme un client Eureka.Voici les étapes à suivre pour chaque microservice :
+Pour qu'un microservice (par exemple, user-service, ticket-service, etc.) puisse être découvert et utilisé par cette gateway, il DOIT 
+
+s'enregistrer comme un client Eureka.Voici les étapes à suivre pour chaque microservice :
+
 1. Ajouter la dépendance Eureka ClientDans le fichier pom.xml de votre microservice, ajoutez la dépendance suivante :
 <dependency>
     <groupId>org.springframework.cloud</groupId>
     <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 </dependency>
+
 N'oubliez pas d'inclure la section <dependencyManagement> pour spring-cloud-dependencies si ce n'est pas déjà fait.
+
 2. Configurer le application.ymlDans le fichier src/main/resources/application.yml de votre microservice, vous devez définir son nom et l'adresse du serveur Eureka.spring:
   application:
-    # IMPORTANT : C'est ce nom que la gateway utilise pour le routage (ex: "lb://user-service")
+     IMPORTANT : C'est ce nom que la gateway utilise pour le routage (ex: "lb://user-service")
     name: user-service # Remplacez par le nom de votre service
 
 eureka:
@@ -62,12 +64,14 @@ eureka:
     # Préférer l'adresse IP à l'hostname pour l'enregistrement
     prefer-ip-address: true
 3. Activer la découverteAssurez-vous que l'annotation @EnableDiscoveryClient est présente sur votre classe principale d'application Spring Boot.@SpringBootApplication
+
 @EnableDiscoveryClient
 public class UserServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserServiceApplication.class, args); 
     }
 }
+
 Une fois ces trois étapes complétées, votre microservice s'enregistrera automatiquement auprès d'Eureka au démarrage, et la gateway sera capable de lui transférer les requêtes. +TEST
 
 
