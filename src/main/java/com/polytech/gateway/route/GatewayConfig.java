@@ -49,11 +49,16 @@ public class GatewayConfig {
                 // --- Route pour le service Interactions (Messages, Avis, Signalements) ---
                 .route("interaction-service-route", r -> r
                         .path("/api/interactions/**")
-                        .filters(f -> f.stripPrefix(1))
+                        .filters(f -> f.stripPrefix(2))
                         .uri("lb://interaction-service")
                 )
                 .route("event-categories-route", r -> r
                         .path("/api/event-categories/**")
+                        .filters(f -> f.stripPrefix(1))
+                        .uri("lb://eventy-events-service")
+                )
+                .route("event-favorites-route", r -> r
+                        .path("/api/favorites/**")
                         .filters(f -> f.stripPrefix(1))
                         .uri("lb://eventy-events-service")
                 )
